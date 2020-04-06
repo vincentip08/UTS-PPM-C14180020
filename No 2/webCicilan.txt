@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+ 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+ 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+
+ 	<script type = "text/javascript">
+ 		var id = 0;
+ 		$(document).on("pageshow","#pagetwo",function(){
+  			alert("pageshow event fired - pagetwo is now shown");
+		});
+ 		function submitPinjaman(){
+ 			alert("Submit berhasil");
+ 			alert("Table updated! Silahkan cek page Informasi Cicilan");
+ 			id+=1;
+ 			var pinjam = $("#pinjaman").val();
+ 			var waktu = $("#waktu").val();
+ 			var hasil;
+ 			var pengembalian = $("#pengembalian");
+
+ 			if(parseInt(waktu)<=6 && parseInt(waktu)>=1){
+ 				hasil = parseInt(pinjam) + (parseInt(pinjam)*0.02*parseInt(waktu))
+ 				pengembalian.val(hasil.toString());
+ 				addToTable(id, pinjam.toString(), waktu.toString(), hasil.toString());
+ 			}
+ 			else if(parseInt(waktu)<=12 && parseInt(waktu)>=7){
+ 				hasil = parseInt(pinjam) + (parseInt(pinjam)*0.015*parseInt(waktu))
+ 				pengembalian.val(hasil.toString());
+ 				addToTable(id, pinjam.toString(), waktu.toString(), hasil.toString());
+ 			}
+ 			else if(parseInt(waktu)>12){
+ 				hasil = parseInt(pinjam) + (parseInt(pinjam)*0.1*parseInt(waktu))
+ 				pengembalian.val(hasil.toString());
+ 				addToTable(id, pinjam.toString(), "lebih dari 12 bulan", hasil.toString());
+ 			}
+
+ 			
+ 		}
+
+ 		function addToTable(id, pinjaman, waktu, pengembalian){
+        	var tableBody = $("table tbody");
+        	var markup = "<tr><td>" + id + "</td><td>" + pinjaman + "</td><td>" + waktu + "</td><td>" + pengembalian + "</td></tr>";
+        	tableBody.append(markup);
+    	}
+ 	</script>
+</head>
+<body>
+	<!--Page 1-->
+<div data-role ="page" id ="page1">
+
+	<div data-role ="header">
+		<div data-role ="navbar">
+			<ul>
+				<li><a href ="#page1">Input Pinjaman</a></li>
+				<li><a href ="#page2">Informasi Cicilan</a></li>
+			</ul>
+		</div>
+	</div>
+<form method="post" action="demoform.asp">
+  <div class="ui-field-contain">
+  	<div class = "container">
+    <label for="Jumlah-pinjaman">Jumlah Pinjaman :</label>
+    <input type="text" name="pinjaman" id="pinjaman">
+
+   <fieldset class="ui-field-contain">
+    <label for="day">Pilih waktu cicilan :</label>
+    <select name="day" id="waktu">
+      <option value="1">1 Bulan</option>
+      <option value="2">2 Bulan</option>
+      <option value="3">3 Bulan</option>
+      <option value="4">4 Bulan</option>
+      <option value="5">5 Bulan</option>
+      <option value="6">6 Bulan</option>
+      <option value="7">7 Bulan</option>
+      <option value="8">8 Bulan</option>
+      <option value="9">9 Bulan</option>
+      <option value="10">10 Bulan</option>
+      <option value="11">11 Bulan</option>
+      <option value="12">12 Bulan</option>
+      <option value="13">Lebih dari 12 bulan</option>
+    </select>
+  </fieldset>
+</div>
+	<div class="container">
+    <button onclick="submitPinjaman()">Submit</button>
+<div class ="container2">
+    <label for="textarea-1">Total Pengembalian :</label>
+    <textarea name="textarea-1" id="pengembalian"></textarea>
+  </div>
+</div>
+</form>
+</div>
+
+
+</div>
+	<!--     -->
+	<div data-role ="page" id ="page2">
+
+	<div data-role ="header">
+		<div data-role ="navbar">
+			<ul>
+				<li><a href ="#page1">Input Pinjaman</a></li>
+				<li><a href ="#page2">Informasi Cicilan</a></li>
+			</ul>
+		</div>
+	</div>
+	<div data-role="content">
+            <table class="table">
+                <thead>
+                    <tr>
+                    	<th>ID</th>
+                        <th>Pinjaman</th>
+                        <th>Waktu Pinjaman</th>
+                        <th>Total Pengembalian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+</div>
+
+</body>
+</html>
